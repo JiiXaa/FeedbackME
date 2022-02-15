@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { FETCH_USER } from './types';
+import { REVIEW_SURVEY } from './types';
 
 // redux thunk sees we return function and automatically call it with dispatch
 export const fetchUser = () => async (dispatch) => {
@@ -10,4 +11,14 @@ export const fetchUser = () => async (dispatch) => {
 export const handleToken = (token) => async (dispatch) => {
   const res = await axios.post('/api/stripe', token);
   dispatch({ type: FETCH_USER, payload: res.data });
+};
+
+// action for a survey review FORMIK/YUP
+export const reviewSurvey = (survey) => {
+  return { type: REVIEW_SURVEY, payload: survey };
+};
+
+// action for Submitting Survey Form
+export const submitSurvey = (values) => {
+  return { type: 'submit_survey' };
 };
