@@ -18,7 +18,11 @@ export const reviewSurvey = (survey) => {
   return { type: REVIEW_SURVEY, payload: survey };
 };
 
-// action for Submitting Survey Form
-export const submitSurvey = (values) => {
-  return { type: 'submit_survey' };
+// action for Submitting Survey Form (SurveyFormReview)
+export const submitSurvey = (values, navigate) => async (dispatch) => {
+  const res = await axios.post('/api/surveys', values);
+
+  navigate('/surveys');
+
+  dispatch({ type: FETCH_USER, payload: res.data });
 };
