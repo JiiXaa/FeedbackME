@@ -19,6 +19,7 @@ export const reviewSurvey = (survey) => {
 };
 
 // action for Submitting Survey Form (SurveyFormReview)
+// used useNavigate hooks to navigate to dashboard after sending res. (useNavigate is passed in SurveyFormReview)
 export const submitSurvey = (values, navigate) => async (dispatch) => {
   const res = await axios.post('/api/surveys', values);
 

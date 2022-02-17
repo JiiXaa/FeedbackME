@@ -1,3 +1,6 @@
+const _ = require('lodash');
+const { Path } = require('path-parser');
+const { URL } = require('url');
 const mongoose = require('mongoose');
 const requireLogin = require('../middlewares/requireLogin');
 const requireCredits = require('../middlewares/requireCredits');
@@ -9,6 +12,35 @@ const Survey = mongoose.model('surveys');
 module.exports = (app) => {
   app.get('/api/surveys/thanks', (req, res) => {
     res.send('Thanks for voting!');
+  });
+
+  app.post('/api/surveys/webhooks', (req, res) => {
+    const pathToTest = new Path('/api/surveys/:surveyId/:choice');
+
+    // Using lodash map function because it does work better when the array we're trying to map is accidentally undefined.
+    const sgEvents = _.map(req.body, ({ email, url }) => {
+      // Extracting url value from SENDGRID webhook events object.
+      const pathname = new URL(url).pathname;
+      // path-parser create object with values we specified :surveyId and :choice and compares it with the pathname.
+      // When user clicks on the survey email YES or NO it will extract surveyId and Choice and saves it {surveyId: someId, choice: yes/no}
+      // If Path will not find :surveyId and :choice it will return null, that will help us discard record with wrong email events.
+      const match = pathToTest.test(pathname);
+      if (match) {
+        return {
+          email,
+          surveyId: match.surveyId,
+          choice: match.choice,
+        };
+      }
+    });
+    // Lodash compact method removes all undefined elements
+    const compactSGEvents = _.compact(sgEvents);
+    const uniqueSGEvents = _.uniqBy(compactSGEvents, 'email', 'surveyId');
+    // and returns only uniques
+
+    console.log(uniqueSGEvents);
+
+    res.send({});
   });
 
   app.post('/api/surveys', requireLogin, requireCredits, async (req, res) => {
