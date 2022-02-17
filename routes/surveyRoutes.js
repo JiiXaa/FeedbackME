@@ -15,31 +15,24 @@ module.exports = (app) => {
   });
 
   app.post('/api/surveys/webhooks', (req, res) => {
-    const pathToTest = new Path('/api/surveys/:surveyId/:choice');
-
-    // Using lodash map function because it does work better when the array we're trying to map is accidentally undefined.
-    const sgEvents = _.map(req.body, ({ email, url }) => {
-      // Extracting url value from SENDGRID webhook events object.
-      const pathname = new URL(url).pathname;
-      // path-parser create object with values we specified :surveyId and :choice and compares it with the pathname.
-      // When user clicks on the survey email YES or NO it will extract surveyId and Choice and saves it {surveyId: someId, choice: yes/no}
-      // If Path will not find :surveyId and :choice it will return null, that will help us discard record with wrong email events.
-      const match = pathToTest.test(pathname);
-      if (match) {
-        return {
-          email,
-          surveyId: match.surveyId,
-          choice: match.choice,
-        };
+    // define path params from pathname
+    const p = new Path('/api/surveys/:surveyId/:choice');
+    // map over body of request to pull out meaningful survey data
+    const events = req.body.map(({ email, url }) => {
+      if (url) {
+        // extract pathname from url in webhook event & match
+        const match = p.test(new URL(url).pathname);
+        if (match) {
+          return {
+            ...match,
+            email,
+          };
+        }
       }
     });
-    // Lodash compact method removes all undefined elements
-    const compactSGEvents = _.compact(sgEvents);
-    const uniqueSGEvents = _.uniqBy(compactSGEvents, 'email', 'surveyId');
-    // and returns only uniques
-
-    console.log(uniqueSGEvents);
-
+    // remove non-click events
+    console.log(events);
+    // respond
     res.send({});
   });
 
