@@ -61,6 +61,7 @@ const SurveyForm = ({ survey, reviewSurvey, setShowReview }) => {
             .required('Required'),
         })}
         onSubmit={(values) => {
+          console.log('Yup values: ', values);
           // action creates obj with values from form inputs
           reviewSurvey(values);
           // goes to review component

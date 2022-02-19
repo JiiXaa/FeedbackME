@@ -1,4 +1,3 @@
-const _ = require('lodash');
 const { Path } = require('path-parser');
 const { URL } = require('url');
 const mongoose = require('mongoose');
@@ -18,21 +17,36 @@ module.exports = (app) => {
     // define path params from pathname
     const p = new Path('/api/surveys/:surveyId/:choice');
     // map over body of request to pull out meaningful survey data
-    const events = req.body.map(({ email, url }) => {
-      if (url) {
-        // extract pathname from url in webhook event & match
-        const match = p.test(new URL(url).pathname);
-        if (match) {
-          return {
-            ...match,
-            email,
-          };
+    req.body
+      .map(({ email, url }) => {
+        if (url) {
+          // extract pathname from url in webhook event & match
+          const match = p.test(new URL(url).pathname);
+          if (match) {
+            return {
+              ...match,
+              email,
+            };
+          }
         }
-      }
-    });
-    // remove non-click events
-    console.log(events);
-    // respond
+      })
+      .forEach(({ surveyId, email, choice }) => {
+        console.log('EMAIL -- ', email, surveyId, choice);
+        Survey.updateOne(
+          {
+            _id: surveyId,
+            recipients: {
+              $elemMatch: { email: email, responded: false },
+            },
+          },
+          {
+            $inc: { [choice]: 1 },
+            $set: { 'recipients.$.responded': true },
+            lastResponded: new Date(),
+          }
+        ).exec();
+      });
+
     res.send({});
   });
 

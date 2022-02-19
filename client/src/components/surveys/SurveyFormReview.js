@@ -34,7 +34,7 @@ const SurveyReview = ({
         Back
       </button>
       <button
-        // submitSurvey comes from actions, and we pass it to the props
+        // submitSurvey comes from actions, and we pass in the props
         onClick={() => submitSurvey(storeSurveyReviewInputs, navigate)}
         className='green btn-flat right white-text'
       >
