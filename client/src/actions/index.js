@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER } from './types';
-import { REVIEW_SURVEY } from './types';
+import { FETCH_USER, REVIEW_SURVEY, FETCH_SURVEYS } from './types';
 
 // redux thunk sees we return function and automatically call it with dispatch
 export const fetchUser = () => async (dispatch) => {
@@ -19,11 +18,16 @@ export const reviewSurvey = (survey) => {
 };
 
 // action for Submitting Survey Form (SurveyFormReview)
-// used useNavigate hooks to navigate to dashboard after sending res. (useNavigate is passed in SurveyFormReview)
+// used useNavigate hook to navigate to dashboard after making post to our server. (useNavigate is passed in SurveyFormReview)
 export const submitSurvey = (values, navigate) => async (dispatch) => {
   const res = await axios.post('/api/surveys', values);
-
   navigate('/surveys');
 
   dispatch({ type: FETCH_USER, payload: res.data });
+};
+
+export const fetchSurveys = () => async (dispatch) => {
+  const res = await axios.get('/api/surveys');
+
+  dispatch({ type: FETCH_SURVEYS, payload: res.data });
 };
