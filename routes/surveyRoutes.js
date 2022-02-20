@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const { Path } = require('path-parser');
 const { URL } = require('url');
 const mongoose = require('mongoose');
@@ -24,23 +25,19 @@ module.exports = (app) => {
   });
 
   app.post('/api/surveys/webhooks', (req, res) => {
-    // define path params from pathname
-    const p = new Path('/api/surveys/:surveyId/:choice');
-    // map over body of request to pull out meaningful survey data
-    req.body
+    const p = new Path('/:surveyId/:choice');
+
+    // used Lodash because it deals better with undefined values/no errors.
+    const test = _.chain(req.body)
       .map(({ email, url }) => {
-        if (url) {
-          // extract pathname from url in webhook event & match
-          const match = p.test(new URL(url).pathname);
-          if (match) {
-            return {
-              ...match,
-              email,
-            };
-          }
+        const match = p.test(new URL(url).pathname);
+        if (match) {
+          return { email, surveyId: match.surveyId, choice: match.choice };
         }
       })
-      .forEach(({ surveyId, email, choice }) => {
+      .compact()
+      .uniqBy('email', 'surveyId')
+      .each(({ surveyId, email, choice }) => {
         console.log('EMAIL -- ', email, surveyId, choice);
         Survey.updateOne(
           {
@@ -55,7 +52,8 @@ module.exports = (app) => {
             lastResponded: new Date(),
           }
         ).exec();
-      });
+      })
+      .value();
 
     res.send({});
   });

@@ -7,6 +7,7 @@ import Header from './Header';
 import Landing from './Landing';
 import Dashboard from './Dashboard';
 import SurveyNew from './surveys/SurveyNew';
+import Thanks from './surveys/Thanks';
 
 class App extends Component {
   componentDidMount() {
@@ -21,6 +22,7 @@ class App extends Component {
           <Route path='/' element={<Landing />} />
           <Route path='/surveys' element={<Dashboard />} />
           <Route path='/surveys/new' element={<SurveyNew />} />
+          <Route path='/:surveyId/:choice' element={<Thanks />} />
         </Routes>
       </div>
     );
