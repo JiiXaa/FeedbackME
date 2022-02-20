@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { fetchSurveys } from '../../actions';
 
 class SurveyList extends Component {
-  componentDidMount() {
-    this.props.fetchSurveys();
-  }
-
   renderSurveys() {
-    return this.props.surveysFetchedFromDB.reverse().map((fetchedSurvey) => {
+    // console.log('ten', this.props.dataFetched);
+    return this.props.dataFetched.map((fetchedSurvey) => {
       return (
         <div className='card blue-grey darken-1' key={fetchedSurvey._id}>
           <div className='card-content'>
@@ -20,7 +15,7 @@ class SurveyList extends Component {
           </div>
           <div className='card-action'>
             <a>Yes: {fetchedSurvey.yes}</a>
-            <a>Yes: {fetchedSurvey.no}</a>
+            <a>No: {fetchedSurvey.no}</a>
           </div>
         </div>
       );
@@ -32,8 +27,4 @@ class SurveyList extends Component {
   }
 }
 
-function mapStateToProps({ surveysFetchedFromDB }) {
-  return { surveysFetchedFromDB };
-}
-
-export default connect(mapStateToProps, { fetchSurveys })(SurveyList);
+export default SurveyList;
