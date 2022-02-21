@@ -4,6 +4,8 @@ import SurveyList from './surveys/SurveyList';
 import { fetchSurveys } from '../actions';
 import { connect } from 'react-redux';
 
+import styled from 'styled-components';
+
 class Dashboard extends Component {
   state = {
     sortType: 'desc',
@@ -41,6 +43,23 @@ class Dashboard extends Component {
       surveysList: sorted,
     });
   }
+
+  sortByPositiveFeedback() {
+    const { sortType, surveysList } = this.state;
+
+    let sorted = surveysList.sort(function (a, b) {
+      if (sortType === 'asc') {
+        return b.yes - a.yes;
+      } else {
+        return a.yes - b.yes;
+      }
+    });
+
+    this.setState({
+      sortType: this.state.sortType === 'asc' ? 'desc' : 'asc',
+      surveysList: sorted,
+    });
+  }
   // sortByDateOld() {
   //   const sortedSurveys = this.props.surveysFetchedFromDB.sort(
   //     (a, b) => b.dateSent - a.dateSent
@@ -51,15 +70,24 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div>
-        <button onClick={() => this.sortByDate()}>Sort by date</button>
-        <SurveyList dataFetched={this.state.surveysList} />
-        <div className='fixed-action-btn'>
-          <Link to='/surveys/new' className='btn-floating btn-large red'>
-            <i className='material-icons'>add</i>
-          </Link>
-        </div>
-      </div>
+      <StyledContainerWrapper>
+        <StyledDashboardWrapper>
+          <StyledButtonsWrapper>
+            <StyledSortingBtn onClick={() => this.sortByDate()}>
+              Sort by date
+            </StyledSortingBtn>
+            <StyledSortingBtn onClick={() => this.sortByPositiveFeedback()}>
+              Sort by positive
+            </StyledSortingBtn>
+          </StyledButtonsWrapper>
+          <SurveyList dataFetched={this.state.surveysList} />
+          <div className='fixed-action-btn'>
+            <Link to='/surveys/new' className='btn-floating btn-large red'>
+              <i className='material-icons'>add</i>
+            </Link>
+          </div>
+        </StyledDashboardWrapper>
+      </StyledContainerWrapper>
     );
   }
 }
@@ -69,3 +97,24 @@ function mapStateToProps({ surveysFetchedFromDB }) {
 }
 
 export default connect(mapStateToProps, { fetchSurveys })(Dashboard);
+
+const StyledContainerWrapper = styled.div`
+  max-width: 1280px;
+  margin: 0 auto;
+`;
+
+const StyledDashboardWrapper = styled.div`
+  padding-top: 5.2rem;
+  border: 2px solid red;
+`;
+
+const StyledButtonsWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const StyledSortingBtn = styled.button`
+  cursor: pointer;
+  padding: 1rem 2rem;
+  border: none;
+`;

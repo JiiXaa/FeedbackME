@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import formInputs from './formInputs';
 import * as actions from '../../actions';
 
+import styled from 'styled-components';
+
 // this component shows users their form inputs for review
 const SurveyReview = ({
   storeSurveyReviewInputs,

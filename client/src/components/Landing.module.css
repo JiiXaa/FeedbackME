@@ -1,0 +1,17 @@
+.container {
+  border: 2px solid red;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashboard__link {
+  font-size: 1.8rem;
+  border: 2px solid orange;
+  padding: 1.2rem;
+}
+
+.landing__img {
+  padding-top: 2rem;
+  width: 100%;
+}
