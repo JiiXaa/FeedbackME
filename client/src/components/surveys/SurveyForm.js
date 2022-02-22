@@ -37,7 +37,7 @@ const renderInputs = () => {
   });
 };
 
-const SurveyForm = ({ survey, reviewSurvey, setShowReview }) => {
+const SurveyForm = ({ survey, reviewSurvey, showReviewForm }) => {
   return (
     <StyledFormContainer>
       <h2>Submit Survey and review your inputs in next step.</h2>
@@ -72,7 +72,7 @@ const SurveyForm = ({ survey, reviewSurvey, setShowReview }) => {
           // action creates obj with values from form inputs
           reviewSurvey(values);
           // goes to review component
-          setShowReview(true);
+          showReviewForm();
         }}
         validateOnChange={false}
       >
