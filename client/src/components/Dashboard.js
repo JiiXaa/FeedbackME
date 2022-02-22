@@ -31,13 +31,6 @@ class Dashboard extends Component {
       }
     });
 
-    // call the sort method on the surveys array
-    // surveys = surveys.sort(
-    // make sure the "dateSent" var is a Js Date Object
-    // and is valid, we can call getTime() to get a number
-    // for the sort comparison
-    // (a, b) => new Date(b.dateSent) - new Date(a.dateSent)
-    // );
     this.setState({
       sortType: this.state.sortType === 'asc' ? 'desc' : 'asc',
       surveysList: sorted,
@@ -60,13 +53,6 @@ class Dashboard extends Component {
       surveysList: sorted,
     });
   }
-  // sortByDateOld() {
-  //   const sortedSurveys = this.props.surveysFetchedFromDB.sort(
-  //     (a, b) => b.dateSent - a.dateSent
-  //   );
-  //   console.log(sortedSurveys);
-  //   console.log(this.props.surveysFetchedFromDB);
-  // }
 
   render() {
     return (
@@ -81,11 +67,9 @@ class Dashboard extends Component {
             </StyledSortingBtn>
           </StyledButtonsWrapper>
           <SurveyList dataFetched={this.state.surveysList} />
-          <div className='fixed-action-btn'>
-            <Link to='/surveys/new' className='btn-floating btn-large red'>
-              <i className='material-icons'>add</i>
-            </Link>
-          </div>
+          <StyledLink to='/surveys/new'>
+            <i className='material-icons'>add</i>
+          </StyledLink>
         </StyledDashboardWrapper>
       </StyledContainerWrapper>
     );
@@ -105,7 +89,6 @@ const StyledContainerWrapper = styled.div`
 
 const StyledDashboardWrapper = styled.div`
   padding-top: 5.2rem;
-  border: 2px solid red;
 `;
 
 const StyledButtonsWrapper = styled.div`
@@ -117,4 +100,27 @@ const StyledSortingBtn = styled.button`
   cursor: pointer;
   padding: 1rem 2rem;
   border: none;
+`;
+
+const StyledLink = styled(Link)`
+  position: fixed;
+  bottom: 5rem;
+  right: 5rem;
+  padding: 1rem;
+  background-color: #dd4a48;
+  border: 2px solid #f9e4d4;
+  border-radius: 50%;
+  margin: 1rem;
+  font-size: 1.5rem;
+  font-weight: 100;
+  text-decoration: none;
+  transition: 0.2s ease-out;
+  i {
+    font-size: 2rem;
+    color: white;
+  }
+
+  &:hover {
+    background-color: #ef6c57;
+  }
 `;

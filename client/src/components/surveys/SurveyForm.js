@@ -6,16 +6,20 @@ import { reviewSurvey } from '../../actions';
 import { connect } from 'react-redux';
 import formInputs from './formInputs';
 
+import styled from 'styled-components';
+
 const MyTextInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   return (
-    <>
-      <label htmlFor={props.id || props.name}>{label}</label>
-      <input className='text-input' {...field} {...props} />
+    <StyledInputContainer>
+      <StyledFormLabel htmlFor={props.id || props.name}>
+        {label}
+      </StyledFormLabel>
+      <StyledFormInput {...field} {...props} />
       {meta.touched && meta.error ? (
-        <div className='error red-text'>{meta.error}</div>
+        <StyledRequiredInputError>{meta.error}</StyledRequiredInputError>
       ) : null}
-    </>
+    </StyledInputContainer>
   );
 };
 
@@ -35,8 +39,12 @@ const renderInputs = () => {
 
 const SurveyForm = ({ survey, reviewSurvey, setShowReview }) => {
   return (
-    <>
-      <h3>Submit a survey!</h3>
+    <StyledFormContainer>
+      <h2>Submit Survey and review your inputs in next step.</h2>
+      <small>
+        Make sure your Recipient List has valid emails and they are comma
+        separated
+      </small>
       <Formik
         initialValues={{
           title: survey?.title || '',
@@ -61,7 +69,6 @@ const SurveyForm = ({ survey, reviewSurvey, setShowReview }) => {
             .required('Required'),
         })}
         onSubmit={(values) => {
-          console.log('Yup values: ', values);
           // action creates obj with values from form inputs
           reviewSurvey(values);
           // goes to review component
@@ -69,18 +76,18 @@ const SurveyForm = ({ survey, reviewSurvey, setShowReview }) => {
         }}
         validateOnChange={false}
       >
-        <Form>
+        <StyledFormikForm>
           {renderInputs()}
-          <Link to='/surveys' className='red btn-flat left white-text'>
-            Cancel
-          </Link>
-          {/* We use button instead of Link to get the option to call an action creator or do some work before the navigation actually occurs (with Link tag, we instantly navigate away with no prior checks.) */}
-          <button className='teal btn-flat right white-text' type='submit'>
-            Next<i className='material-icons right'>done</i>
-          </button>
-        </Form>
+          <StyledBottomBtnContainer>
+            <StyledLink to='/surveys'>Cancel</StyledLink>
+            {/* We use button instead of Link to get the option to call an action creator or do some work before the navigation actually occurs (with Link tag, we instantly navigate away with no prior checks.) */}
+            <StyledNextBtn type='submit'>
+              Next<i className='material-icons right'>done</i>
+            </StyledNextBtn>
+          </StyledBottomBtnContainer>
+        </StyledFormikForm>
       </Formik>
-    </>
+    </StyledFormContainer>
   );
 };
 
@@ -90,3 +97,98 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, { reviewSurvey })(SurveyForm);
+
+const StyledFormContainer = styled.div`
+  padding: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h2 {
+    color: rgba(59, 63, 66, 0.8);
+    margin: 0.5rem;
+  }
+
+  small {
+    font-size: 0.9rem;
+    color: #fc4f4f;
+  }
+`;
+
+const StyledInputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+`;
+
+const StyledFormikForm = styled(Form)`
+  max-width: 1170px;
+  width: 100%;
+`;
+
+const StyledFormInput = styled.input`
+  padding: 1.5rem 0;
+  font-size: 1.2rem;
+  outline: none;
+  border: none;
+  border-bottom: 1px dashed rgba(59, 63, 66, 0.8);
+`;
+
+const StyledFormLabel = styled.label`
+  font-weight: 400;
+  color: rgba(59, 63, 66, 0.5);
+`;
+
+const StyledRequiredInputError = styled.small`
+  margin: 0.3rem;
+  color: red;
+`;
+
+const StyledBottomBtnContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const StyledNextBtn = styled.button`
+  font-size: 1rem;
+  padding: 0.5rem 1.5rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  color: whitesmoke;
+  background-color: #74b49b;
+  border-radius: 2px;
+  transition: 0.2s ease-out;
+
+  &:hover {
+    background-color: #a7d7c5;
+  }
+
+  i {
+    padding-left: 0.5rem;
+  }
+`;
+
+const StyledLink = styled(Link)`
+  padding: 0.5rem 1.8rem;
+  display: flex;
+  align-items: center;
+  background-color: #df6a6a;
+  color: rgba(59, 63, 66, 0.5);
+  border: none;
+  color: whitesmoke;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: 0.2s ease-out;
+
+  &:hover {
+    background-color: #ef6c57;
+  }
+
+  i {
+    font-size: 2rem;
+    color: white;
+  }
+`;

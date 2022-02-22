@@ -5,6 +5,77 @@ import styled from 'styled-components';
 
 import landingImg from '../img/l1-transparent.png';
 
+class Landing extends Component {
+  renderContent() {
+    return (
+      <div>
+        <StyledLogoArticle>
+          <h1>We provide Customer Satisfaction Surveys</h1>
+          <p>Send unlimited surveys with us cheap!</p>
+          <div>
+            {this.props.auth ? (
+              <StyledToDashboardBtn to={this.props.auth ? '/surveys' : '/'}>
+                Go To Dashboard
+              </StyledToDashboardBtn>
+            ) : (
+              ''
+            )}
+          </div>
+        </StyledLogoArticle>
+        <StyledMainWrapper>
+          <StyledMain>
+            <img src={landingImg} alt='' />
+            <StyledHeadingsContainer>
+              <h1>Wondered if you need a customer satisfaction survey?</h1>
+              <p>
+                A customer satisfaction survey gather feedback from your current
+                or past customers. You just need to provide list of emails,
+                description and we do the rest!
+              </p>
+            </StyledHeadingsContainer>
+            <StyledHeadingsContainer>
+              <h1>What this is about? and how does it work?</h1>
+
+              <p>
+                Simple survey about your services from your customers with
+                response containing if they were happy or not! Send
+                <span>UNLIMITED</span>
+                emails and we will gather response for you.
+              </p>
+            </StyledHeadingsContainer>
+            <StyledHeadingsContainer>
+              <h1>How to create your customer satisfaction survey?</h1>
+
+              <p>
+                Simply create new survey from your dashboard, add your Customers
+                emails. Make sure to be specific with that what you want to ask!
+                You could ask “How was your experience with us?”, Did you find
+                our staff friendly? This can help to give you a broad overview.
+              </p>
+            </StyledHeadingsContainer>
+          </StyledMain>
+        </StyledMainWrapper>
+        <StyledFooter>
+          <StyledCopyrightBtn href='https://www.linkedin.com/in/tomasz-ostroga-9753301a3/'>
+            <span>2022</span> JiiXaa ©
+          </StyledCopyrightBtn>
+        </StyledFooter>
+      </div>
+    );
+  }
+
+  render() {
+    return <article>{this.renderContent()}</article>;
+  }
+}
+
+function mapStateToProps({ auth }) {
+  // auth coming from reducers/index.js
+  return { auth };
+}
+
+export default connect(mapStateToProps)(Landing);
+
 const StyledLogoArticle = styled.div`
   color: whitesmoke;
   padding-bottom: 4rem;
@@ -95,73 +166,3 @@ const StyledCopyrightBtn = styled.a`
     }
   }
 `;
-class Landing extends Component {
-  renderContent() {
-    return (
-      <div>
-        <StyledLogoArticle>
-          <h1>We provide Customer Satisfaction Surveys</h1>
-          <p>Send unlimited surveys with us cheap!</p>
-          <div>
-            {this.props.auth ? (
-              <StyledToDashboardBtn to={this.props.auth ? '/surveys' : '/'}>
-                Go To Dashboard
-              </StyledToDashboardBtn>
-            ) : (
-              ''
-            )}
-          </div>
-        </StyledLogoArticle>
-        <StyledMainWrapper>
-          <StyledMain>
-            <img src={landingImg} alt='' />
-            <StyledHeadingsContainer>
-              <h1>Wondered if you need a customer satisfaction survey?</h1>
-              <p>
-                A customer satisfaction survey gather feedback from your current
-                or past customers. You just need to provide list of emails,
-                description and we do the rest!
-              </p>
-            </StyledHeadingsContainer>
-            <StyledHeadingsContainer>
-              <h1>What this is about? and how does it work?</h1>
-
-              <p>
-                Simple survey about your services from your customers with
-                response containing if they were happy or not! Send
-                <span>UNLIMITED</span>
-                emails and we will gather response for you.
-              </p>
-            </StyledHeadingsContainer>
-            <StyledHeadingsContainer>
-              <h1>How to create your customer satisfaction survey?</h1>
-
-              <p>
-                Simply create new survey from your dashboard, add your Customers
-                emails. Make sure to be specific with that what you want to ask!
-                You could ask “How was your experience with us?”, Did you find
-                our staff friendly? This can help to give you a broad overview.
-              </p>
-            </StyledHeadingsContainer>
-          </StyledMain>
-        </StyledMainWrapper>
-        <StyledFooter>
-          <StyledCopyrightBtn href='https://www.linkedin.com/in/tomasz-ostroga-9753301a3/'>
-            <span>2022</span> JiiXaa ©
-          </StyledCopyrightBtn>
-        </StyledFooter>
-      </div>
-    );
-  }
-
-  render() {
-    return <article>{this.renderContent()}</article>;
-  }
-}
-
-function mapStateToProps({ auth }) {
-  // auth coming from reducers/index.js
-  return { auth };
-}
-
-export default connect(mapStateToProps)(Landing);
