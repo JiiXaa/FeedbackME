@@ -8,6 +8,7 @@ import styled from 'styled-components';
 
 // this component shows users their form inputs for review
 const SurveyReview = ({
+  credits,
   storeSurveyReviewInputs,
   setShowReview,
   submitSurvey,
@@ -38,12 +39,17 @@ const SurveyReview = ({
           Send Survey <i className='material-icons right'>email</i>
         </StyledSendBtn>
       </StyledReviewBtnsContainer>
+      {credits < 1 && (
+        <StyledNoCreditsInfo>
+          <small>You need to add credits to be able to send surveys</small>
+        </StyledNoCreditsInfo>
+      )}
     </StyledReviewContainer>
   );
 };
 function mapStateToProps(state) {
   // survey comes from reducers/index.js
-  return { storeSurveyReviewInputs: state.survey };
+  return { storeSurveyReviewInputs: state.survey, credits: state.auth.credits };
 }
 
 export default connect(mapStateToProps, actions)(SurveyReview);
@@ -121,5 +127,11 @@ const StyledBackBtn = styled.button`
 
   i {
     padding-left: 0.5rem;
+  }
+`;
+
+const StyledNoCreditsInfo = styled.div`
+  small {
+    color: red;
   }
 `;
