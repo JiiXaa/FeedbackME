@@ -35,7 +35,6 @@ class Header extends Component {
   }
 
   render() {
-    // console.log('Props from header', this.props);
     return (
       <StyledWrapper>
         <StyledLink to={this.props.auth ? '/surveys' : '/'}>
