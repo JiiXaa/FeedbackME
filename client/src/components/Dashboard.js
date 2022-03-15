@@ -95,7 +95,6 @@ export default connect(mapStateToProps, { fetchSurveys })(Dashboard);
 const StyledContainerWrapper = styled.div`
   max-width: 1280px;
   margin: 0 auto;
-  border: 2px solid black;
 `;
 
 const StyledDashboardWrapper = styled.div`
@@ -103,7 +102,6 @@ const StyledDashboardWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   padding-top: 5.2rem;
-  border: 2px solid orange;
 `;
 
 const StyledButtonsWrapper = styled.div`
