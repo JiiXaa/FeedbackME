@@ -8,4 +8,4 @@ User can log in to the personal dashboard, buy credits to be able to use all app
 :arrow_forward: <b>Back-End:</b> NodeJS/Express <br />
 :arrow_forward: <b>Database:</b> MongoDB/Mongoose <br />
 
-<a href="bit.ly/feedback-me-app" target="_blank">Live Here</a>
+[Live Demo](https://bit.ly/feedback-me-app)
