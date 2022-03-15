@@ -36,7 +36,7 @@ const SurveyNew = () => {
     return () => {
       dispatch(reviewSurvey(null));
     };
-  }, []);
+  });
 
   if (showReview)
     return <SurveyReview setShowReview={() => setShowReview(false)} />;
