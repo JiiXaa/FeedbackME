@@ -35,8 +35,6 @@ class SurveyList extends Component {
 
 export default SurveyList;
 
-const StyledSurveyCardWrapper = styled.div``;
-
 const StyledSurveyResponseYesOrNo = styled.div`
   margin: 0;
   padding: 0.5rem 3.2rem;
