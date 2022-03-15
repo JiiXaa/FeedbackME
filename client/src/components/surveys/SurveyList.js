@@ -44,6 +44,8 @@ const StyledSurveyResponseYesOrNo = styled.div`
 `;
 
 const StyledSurveyCard = styled.div`
+  border: 2px solid red;
+  width: 60%;
   margin: 2rem auto;
   border-radius: 5px;
   background-color: #cdb699;
