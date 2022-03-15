@@ -28,31 +28,34 @@ class Landing extends Component {
             <StyledHeadingsContainer>
               <h1>Wondered if you need a customer satisfaction survey?</h1>
               <p>
-                A customer satisfaction survey gather feedback from your current
-                or past customers. You just need to provide list of emails,
-                description and we do the rest!
+                A customer satisfaction survey gathers feedback from your
+                current or past customers. You just need to provide a list of
+                emails, a description, and we do the rest!
               </p>
             </StyledHeadingsContainer>
             <StyledHeadingsContainer>
               <h1>What this is about? and how does it work?</h1>
 
               <p>
-                Simple survey about your services from your customers with
-                response containing if they were happy or not! Send
+                A simple survey about your services from your customers with
+                responses indicating whether they were happy or not! Send
                 <span>UNLIMITED</span>
-                emails and we will gather response for you.
+                emails and we will gather the responses for you.
               </p>
             </StyledHeadingsContainer>
             <StyledHeadingsContainer>
               <h1>How to create your customer satisfaction survey?</h1>
 
               <p>
-                Simply create new survey from your dashboard, add your Customers
-                emails. Make sure to be specific with that what you want to ask!
-                You could ask “How was your experience with us?”, Did you find
-                our staff friendly? This can help to give you a broad overview.
+                Simply create a new survey from your dashboard and add your
+                customers emails. Make sure you're specific with that what you
+                want to ask! You could ask "How was your experience with us?" or
+                "Did you find our staff friendly?" This can help to give you a
+                broad overview of how your customers feel about the service you
+                supplied.
               </p>
             </StyledHeadingsContainer>
+            <StyledLoginBtn href='/auth/google'>Start Here</StyledLoginBtn>
           </StyledMain>
         </StyledMainWrapper>
         <StyledFooter>
@@ -148,6 +151,7 @@ const StyledFooter = styled.div`
   padding: 2rem;
   padding-right: 5rem;
   text-align: end;
+  margin-top: 3rem;
 `;
 
 const StyledCopyrightBtn = styled.a`
@@ -164,5 +168,22 @@ const StyledCopyrightBtn = styled.a`
     &:hover {
       color: rgba(59, 63, 66, 0.5);
     }
+  }
+`;
+
+const StyledLoginBtn = styled.a`
+  border-radius: 10px;
+  padding: 1.5rem;
+  font-size: 1.7rem;
+  background-color: #227c79;
+  text-decoration: none;
+  transition: background-color 0.5s ease-out;
+
+  &:hover {
+    background-color: #31a8a4;
+  }
+  &:visited,
+  &:link {
+    color: #fff;
   }
 `;
