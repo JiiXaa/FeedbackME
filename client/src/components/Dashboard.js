@@ -66,6 +66,16 @@ class Dashboard extends Component {
               Sort by positive
             </StyledSortingBtn>
           </StyledButtonsWrapper>
+          <StyledStripeDesc>
+            <h2>
+              To be able to add credits, make sure to use these card details:
+            </h2>
+            <p>4242 - 4242 - 4242 - 4242</p>
+            <p>any future date and random 3 digit CVV</p>
+            <p>
+              Stripe works in test mode, and that is why only accepts this card
+            </p>
+          </StyledStripeDesc>
           <SurveyList dataFetched={this.state.surveysList} />
           <StyledLink to='/surveys/new'>
             <i className='material-icons'>add</i>
