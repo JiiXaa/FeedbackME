@@ -66,6 +66,16 @@ class Dashboard extends Component {
               Sort by positive
             </StyledSortingBtn>
           </StyledButtonsWrapper>
+          <StyledStripeDesc>
+            <h2>
+              To be able to add credits, make sure to use these card details:
+            </h2>
+            <p>4242 - 4242 - 4242 - 4242</p>
+            <p>any future date and random 3 digit CVV</p>
+            <p>
+              Stripe works in test mode, and that is why only accepts this card
+            </p>
+          </StyledStripeDesc>
           <SurveyList dataFetched={this.state.surveysList} />
           <StyledLink to='/surveys/new'>
             <i className='material-icons'>add</i>
@@ -88,6 +98,9 @@ const StyledContainerWrapper = styled.div`
 `;
 
 const StyledDashboardWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding-top: 5.2rem;
 `;
 
@@ -122,5 +135,19 @@ const StyledLink = styled(Link)`
 
   &:hover {
     background-color: #ef6c57;
+  }
+`;
+
+const StyledStripeDesc = styled.div`
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+  background-color: #fff1b3;
+  width: 50%;
+  border-radius: 10px;
+
+  h2 {
+    color: #ca4834;
+    text-decoration: underline;
   }
 `;
